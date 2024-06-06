@@ -33,7 +33,3 @@ export async function POST(request:NextRequest) {
     }
     return Response.json(response,{status:201});
 }
-
-export async function GET(request:NextRequest){
-
-}
