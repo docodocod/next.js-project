@@ -5,7 +5,7 @@ async function getAllTodosApi(){
     const res=await fetch(`${process.env.BASE_URL}/api/todos`,{cache:'no-store'})
     console.log("getAllTodo List")
     const contentTypeHeaderValue=res.headers.get('Content-Type');
-    if(contentTypeHeaderValue?.includes('text/html'){
+    if(contentTypeHeaderValue?.includes('text/html')){
         return null;
     }
     return res.json();
