@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {getDocs,collection,doc,Timestamp,setDoc,getFirestore,getDoc,deleteDoc,updateDoc} from "firebase/firestore"
+import {getDocs,collection,doc,Timestamp,setDoc,getFirestore,getDoc,deleteDoc,updateDoc,orderBy,query} from "firebase/firestore"
 const firebaseConfig = {
     apiKey: process.env.API_KEY,
     authDomain: process.env.AUTH_DOMAIN,
@@ -19,7 +19,9 @@ const createdAtTimestamp=Timestamp.fromDate(new Date())
 
 //모든 할일 가져오기
 export async function getAllTodos() {
-    const querySnapshot = await getDocs(collection(db, "transfer-todo"));
+    const todoRef=collection(db, "transfer-todo");
+    const descQuery=query(todoRef,orderBy("created_at","desc"));
+    const querySnapshot = await getDocs(descQuery);
     if (querySnapshot.empty){
         return [];
     }
@@ -29,7 +31,7 @@ export async function getAllTodos() {
             id: doc.id,
             title: doc.data()["title"],
             is_done: doc.data()["is_done"],
-            created_at: doc.data()["created_at"].toDate().toLocaleTimeString('ko')
+            created_at: doc.data()["created_at"].toDate()
         }
         allTodos.push(aTodo);
     })

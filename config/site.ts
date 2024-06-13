@@ -27,19 +27,19 @@ export const siteConfig = {
   ],
   navMenuItems: [
     {
-      label: "Profile",
+      label: "내 정보",
       href: "/profile",
     },
     {
-      label: "Dashboard",
+      label: "나의 할 일",
       href: "/dashboard",
     },
     {
-      label: "Projects",
+      label: "편입 합격 수기",
       href: "/projects",
     },
     {
-      label: "Team",
+      label: "편입 불합격 수기",
       href: "/team",
     },
     {

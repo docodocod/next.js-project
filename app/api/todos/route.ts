@@ -1,5 +1,5 @@
 import {NextRequest, NextResponse} from "next/server";
-import {getAllTodos,addTodo} from "@/data/firestore";
+import {getAllTodos, addTodo, deleteTodo, getTodo} from "@/data/firestore";
 
 
 //모든 할일 조회
@@ -9,7 +9,6 @@ export async function GET(request:NextRequest) {
         message:"모든 할일 조회",
         data:Todos
     }
-
     return NextResponse.json(response, {status: 201});
 }
 
@@ -30,6 +29,21 @@ export async function POST(request:NextRequest) {
     const response={
         message: "할일 추가 성공",
         data:addedTodo
+    }
+    return Response.json(response,{status:201});
+}
+
+export async function DELETE(request:NextRequest) {
+
+    const {id}=await request.parmas.id;
+
+    const getTodoList=await getTodo(id);
+
+    await deleteTodo({id});
+
+    const response={
+        message: "할일 삭제 성공",
+        data:getTodoList
     }
     return Response.json(response,{status:201});
 }
