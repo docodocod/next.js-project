@@ -30,9 +30,9 @@
 		"@typescript-eslint/parser": "^7.10.0",
 		"autoprefixer": "10.4.19",
 		"clsx": "^2.0.0",
-		"eslint": "^8.56.0",
+		"eslint": "^9.4.0",
 		"eslint-config-next": "14.2.1",
-		"eslint-config-prettier": "^8.2.0",
+		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-import": "^2.26.0",
 		"eslint-plugin-jsx-a11y": "^6.4.1",
 		"eslint-plugin-node": "^11.1.0",
@@ -57,5 +57,8 @@
 	"main": "index.js",
 	"repository": "https://github.com/docodocod/next.js-project.git",
 	"author": "donga <dongan0618@naver.com>",
-	"license": "MIT"
+	"license": "MIT",
+	"devDependencies": {
+		"prettier": "^3.3.2"
+	}
 }
