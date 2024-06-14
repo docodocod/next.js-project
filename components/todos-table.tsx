@@ -15,17 +15,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import CustomModal from "@/components/custom-modal";
 
 const TodosTable = ({todos}: { todos: Todo[] }) => {
+    //버튼
     const [todoAddEnable, setTodoAddEnable] = useState(false);
-    const [newTodoInput, setNewTodoInput] = useState('');
+    // 할 일 입력
+    const [newTodoInput, setNewTodoInput] = useState('')
     // 로딩상태
     const [isLoading, setIsLoading] = useState<Boolean>(false);
-
     //띄우는 모달 상태
     const [currentModalData, setCurrentModalData] = useState<FocusedTodoType>({
         focusedTodo: null,
         modalType: "detail" as CustomModalType
-    })
+    });
+    // 갱신용
     const router = useRouter();
+    // 할일 성공시 알람
     const notifySuccessEvent = (msg:string) => toast.success(msg, {
         position: "top-right",
         autoClose: 2000,
@@ -36,6 +39,7 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         progress: undefined,
         theme: "light"
     });
+    //한국날짜로 갱신
     const ChangeDateFormat = (today: Date) => {
         const date = new Date(today);
         const options = {
@@ -49,8 +53,10 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         const koreanTimeString = new Intl.DateTimeFormat('ko-KR', options).format(date);
         return koreanTimeString;
     }
+    
     const checkIsDone=(isDone:boolean)=>(isDone ? "line-through text-gray-900/50 dark: text-white/40":
         "");
+    // 할일 표
     const TodoRow = (aTodo: Todo) => {
         return <TableRow key={aTodo.id}>
             <TableCell className={checkIsDone(aTodo.is_done)}>{aTodo.id.slice(0, 4)}</TableCell>
@@ -128,8 +134,7 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         console.log(`할일 추가완료: ${newTodoInput}`);
     }
 
-    const EditTodoHandler = async (id:string,editedTitle: string,editedIsDone:boolean) => {
-
+    const EditTodoHandler = async (id:string,editedTitle:string,editedIsDone:boolean) => {
         setIsLoading(true);
         await new Promise(f => setTimeout(f, 600));
         await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos/${id}`, {
@@ -176,7 +181,6 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
             </PopoverContent>
         </Popover>
     }
-
     return (
         <div className='flex flex-col space-y-2'>
             {ModalComponent()}
