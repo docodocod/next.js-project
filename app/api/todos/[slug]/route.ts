@@ -17,7 +17,7 @@ export async function GET(request: NextRequest, {params}:{slug:string} ) {
 }*/
 
 //단일 할일 삭제
-export async function DELETE(request: NextRequest, {params}: { slug: string } ) {
+export async function DELETE(request: NextRequest, {params}: {params:{ slug: string }} ) {
 
     const deleteTodoList=await deleteTodo(params.slug);
 
@@ -32,7 +32,7 @@ export async function DELETE(request: NextRequest, {params}: { slug: string } ) 
 }
 
 //단일 할일 수정
-export async function POST(request: NextRequest, {params}: { slug: string } ) {
+export async function POST(request: NextRequest, {params}: {params:{ slug: string }} ) {
     const {title,is_done}=await request.json();
     const editTodos=await editTodo(params.slug,{title,is_done});
     const response = {

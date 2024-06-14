@@ -12,7 +12,7 @@ const CustomModal = ({focusedTodo, modalType, onClose,onEdit,onDelete}: {
     onEdit:(id:string,title:string,isDone:boolean)=>void,
     onDelete:(id:string)=>void
 }) => {
-    const ChangeDateFormat = (today: Date) => {
+    /*const ChangeDateFormat = (today: Date) => {
         const date = new Date(today);
         const options = {
             timeZone: 'Asia/Seoul',
@@ -24,7 +24,7 @@ const CustomModal = ({focusedTodo, modalType, onClose,onEdit,onDelete}: {
         };
         const koreanTimeString = new Intl.DateTimeFormat('ko-KR', options).format(date);
         return koreanTimeString;
-    }
+    }*/
     //수정된 상태
     const [isDone, setIsDone] = useState(focusedTodo.is_done)
 
@@ -50,7 +50,7 @@ const CustomModal = ({focusedTodo, modalType, onClose,onEdit,onDelete}: {
                     </div>
                     <div className="flex py-2 space-x-4">
                         <span className='font-bold'>작성일 : </span>
-                        <p>{ChangeDateFormat(focusedTodo.created_at)}</p>
+                        <p>{`${focusedTodo.created_at}`}</p>
                     </div>
                 </ModalBody>
                 <ModalFooter>
@@ -93,7 +93,7 @@ const CustomModal = ({focusedTodo, modalType, onClose,onEdit,onDelete}: {
                     </div>
                     <div className="flex py-2 space-x-4">
                         <span className='font-bold'>작성일 : </span>
-                        <p>{ChangeDateFormat(focusedTodo.created_at)}</p>
+                        <p>{`${focusedTodo.created_at}`}</p>`
                     </div>
                 </ModalBody>
                 <ModalFooter>
@@ -132,7 +132,7 @@ const CustomModal = ({focusedTodo, modalType, onClose,onEdit,onDelete}: {
                     </div>
                     <div className="flex py-2 space-x-4">
                         <span className='font-bold'>작성일 : </span>
-                        <p>{ChangeDateFormat(focusedTodo.created_at)}</p>
+                        <p>{`${focusedTodo.created_at}`}</p>
                     </div>
                 </ModalBody>
                 <ModalFooter>
@@ -151,11 +151,11 @@ const CustomModal = ({focusedTodo, modalType, onClose,onEdit,onDelete}: {
             </>
         )
     }
-    const getModal = (type: modalType) => {
+    const getModal = (type: string) => {
         switch (type) {
             case 'detail':
                 return DetailModal();
-            case 'update':
+            case 'edit':
                 return EditModal();
             case 'delete':
                 return DeleteModal();

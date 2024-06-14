@@ -27,23 +27,8 @@ export async function POST(request:NextRequest) {
     const addedTodo=await addTodo({title});
 
     const response={
-        message: "할일 추가 성공",
-        data:addedTodo
+            message: "할일 추가 성공",
+            data:addedTodo
     }
-    return Response.json(response,{status:201});
-}
-
-export async function DELETE(request:NextRequest) {
-
-    const {id}=await request.parmas.id;
-
-    const getTodoList=await getTodo(id);
-
-    await deleteTodo({id});
-
-    const response={
-        message: "할일 삭제 성공",
-        data:getTodoList
-    }
-    return Response.json(response,{status:201});
+    return new NextResponse(JSON.stringify(response), { status: 201, headers: { 'Content-Type': 'application/json' } });
 }

@@ -47,12 +47,16 @@ export async function addTodo({title}){
         is_done:false,
         created_at:createdAtTimestamp
     }
-    await setDoc(newTodoRef,newTodoData);
-    return {
-        id:newTodoRef.id,
-        title:title,
-        is_done:false,
-        created_at:createdAtTimestamp.toDate()
+    const list=await setDoc(newTodoRef,newTodoData);
+    if(list===null){
+        return null
+    }else {
+        return {
+            id: newTodoRef.id,
+            title: title,
+            is_done: false,
+            created_at: createdAtTimestamp.toDate()
+        }
     }
 }
 

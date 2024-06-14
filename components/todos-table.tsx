@@ -40,7 +40,7 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         theme: "light"
     });
     //한국날짜로 갱신
-    const ChangeDateFormat = (today: Date) => {
+    /*const ChangeDateFormat = (today: Date) => {
         const date = new Date(today);
         const options = {
             timeZone: 'Asia/Seoul',
@@ -52,7 +52,7 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         };
         const koreanTimeString = new Intl.DateTimeFormat('ko-KR', options).format(date);
         return koreanTimeString;
-    }
+    }*/
     
     const checkIsDone=(isDone:boolean)=>(isDone ? "line-through text-gray-900/50 dark: text-white/40":
         "");
@@ -62,7 +62,7 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
             <TableCell className={checkIsDone(aTodo.is_done)}>{aTodo.id.slice(0, 4)}</TableCell>
             <TableCell className={checkIsDone(aTodo.is_done)}>{aTodo.title}</TableCell>
             <TableCell>{aTodo.is_done ? "완료" : "실패"}</TableCell>
-            <TableCell className={checkIsDone(aTodo.is_done)}>{ChangeDateFormat(aTodo.created_at)}</TableCell>
+            <TableCell className={checkIsDone(aTodo.is_done)}>{`${aTodo.created_at}`}</TableCell>
             <TableCell>
                 <div className="relative flex justify-end items-center gap-2">
                     <Dropdown className="bg-background border-1 border-default-200">
@@ -77,7 +77,7 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
                             onOpen();
                         }}>
                             <DropdownItem key="detail">상세보기</DropdownItem>
-                            <DropdownItem key="update">수정</DropdownItem>
+                            <DropdownItem key="edit">수정</DropdownItem>
                             <DropdownItem key="delete">삭제</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
