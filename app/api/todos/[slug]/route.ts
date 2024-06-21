@@ -1,5 +1,5 @@
 import {NextRequest, NextResponse} from "next/server";
-import {editTodo, getTodo,deleteTodo} from "@/data/firestore";
+import {editTodo, getTodo,deleteTodo} from "@/data/todoData";
 
 /*//단일 할일 조회
 export async function GET(request: NextRequest, {params}:{slug:string} ) {

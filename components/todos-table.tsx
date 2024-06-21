@@ -2,7 +2,7 @@
 
 import {useState} from "react";
 import {
-    Table, TableHeader, TableColumn, TableBody, TableRow, TableCell,
+    Table, TableHeader,TableColumn, TableBody, TableRow, TableCell,
     Input, Button, Popover, PopoverContent, PopoverTrigger, Spinner,
     Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure,
     Dropdown, DropdownTrigger, DropdownMenu, DropdownItem
@@ -14,6 +14,7 @@ import {VerticalDotsIcon} from './icons';
 import 'react-toastify/dist/ReactToastify.css';
 import CustomModal from "@/components/custom-modal";
 
+//할일 테이블
 const TodosTable = ({todos}: { todos: Todo[] }) => {
     //버튼
     const [todoAddEnable, setTodoAddEnable] = useState(false);
@@ -26,8 +27,9 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         focusedTodo: null,
         modalType: "detail" as CustomModalType
     });
-    // 갱신용
+    // 내용 갱신
     const router = useRouter();
+    
     // 할일 성공시 알람
     const notifySuccessEvent = (msg:string) => toast.success(msg, {
         position: "top-right",
@@ -39,30 +41,37 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         progress: undefined,
         theme: "light"
     });
-    //한국날짜로 갱신
-    /*const ChangeDateFormat = (today: Date) => {
-        const date = new Date(today);
-        const options = {
+    
+    //한국시간으로 변환
+    function convertUTCToKoreanTime(utcTimeString: Date): string {
+        const date = new Date(utcTimeString); // UTC 시간 문자열을 Date 객체로 변환
+
+        // options 객체 설정
+        const options: Intl.DateTimeFormatOptions = {
             timeZone: 'Asia/Seoul',
             year: 'numeric',
-            month: 'numeric',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric'
+            month: '2-digit',
+            day: '2-digit',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit'
         };
+
         const koreanTimeString = new Intl.DateTimeFormat('ko-KR', options).format(date);
         return koreanTimeString;
-    }*/
-    
+    }
+
+    //완료 여부 checking
     const checkIsDone=(isDone:boolean)=>(isDone ? "line-through text-gray-900/50 dark: text-white/40":
         "");
+
     // 할일 표
-    const TodoRow = (aTodo: Todo) => {
+    const TodoRow = (aTodo: Todo, index: number) => {
         return <TableRow key={aTodo.id}>
-            <TableCell className={checkIsDone(aTodo.is_done)}>{aTodo.id.slice(0, 4)}</TableCell>
+            <TableCell className={checkIsDone(aTodo.is_done)}>{index}</TableCell>
             <TableCell className={checkIsDone(aTodo.is_done)}>{aTodo.title}</TableCell>
             <TableCell>{aTodo.is_done ? "완료" : "실패"}</TableCell>
-            <TableCell className={checkIsDone(aTodo.is_done)}>{`${aTodo.created_at}`}</TableCell>
+            <TableCell className={checkIsDone(aTodo.is_done)}>{`${convertUTCToKoreanTime(aTodo.created_at).slice(0,12)}`}</TableCell>
             <TableCell>
                 <div className="relative flex justify-end items-center gap-2">
                     <Dropdown className="bg-background border-1 border-default-200">
@@ -86,7 +95,10 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         </TableRow>
     }
 
+    //open 함수 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    
+    //모달 토글 창
     const ModalComponent = () => {
         return (
             <div>
@@ -114,6 +126,8 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
             </div>
         );
     }
+
+    //할일 추가 method
     const AddTodoHandler = async (title:string) => {
         if (!todoAddEnable){return}
         setTodoAddEnable(false);
@@ -134,6 +148,7 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         console.log(`할일 추가완료: ${newTodoInput}`);
     }
 
+    //할일 수정 method
     const EditTodoHandler = async (id:string,editedTitle:string,editedIsDone:boolean) => {
         setIsLoading(true);
         await new Promise(f => setTimeout(f, 600));
@@ -153,6 +168,7 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         console.log(`할일 수정완료: ${newTodoInput}`);
     }
 
+    //할일 삭제 method
     const DeleteTodoHandler = async (id:string) => {
         setIsLoading(true);
         await new Promise(f => setTimeout(f, 600));
@@ -166,6 +182,7 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         console.log(`할일 삭제 완료: ${newTodoInput}`);
     }
 
+    //추가 버튼 누를시 경고 method
     const DisAbleTodoButton = () => {
         return <Popover placement="top" showArrow={true}>
             <PopoverTrigger>
@@ -181,20 +198,21 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
             </PopoverContent>
         </Popover>
     }
+
     return (
         <div className='flex flex-col space-y-2'>
             {ModalComponent()}
             <ToastContainer/>
-            <div className="flex flex-wrap w-full md:flex-nowrap gap-4">
-                <Input type="text" label="오늘 할 일"
+            <div className="flex flex-wrap w-128 md:flex-nowrap gap-4">
+                <Input className="flex-grow" type="text" label="오늘 할 일"
                        value={newTodoInput}
                        onValueChange={(changedInput: string) => {
                            setNewTodoInput(changedInput);
                            setTodoAddEnable(changedInput.length > 0);
                        }}/>
-                <div>
+                <div className="flex-grow">
                 {todoAddEnable ?
-                        <Button color="warning" className="h-14 flex flex-wrap"
+                        <Button color="warning" className="h-14"
                                 onPress={async () => {
                                     await AddTodoHandler(newTodoInput)
                                 }}>
@@ -208,15 +226,15 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
             </div>
             <Table aria-label="Example static collection table">
                 <TableHeader>
-                    <TableColumn>아이디</TableColumn>
-                    <TableColumn>할일 내용</TableColumn>
-                    <TableColumn>완료 여부</TableColumn>
-                    <TableColumn>생성일</TableColumn>
-                    <TableColumn>액션</TableColumn>
+                    <TableColumn className="text-center">번호</TableColumn>
+                    <TableColumn className="text-center w-32">할일 내용</TableColumn>
+                    <TableColumn className="text-center">완료 여부</TableColumn>
+                    <TableColumn className="text-center">생성일</TableColumn>
+                    <TableColumn className="text-center">액션</TableColumn>
                 </TableHeader>
                 <TableBody emptyContent={"할일을 추가 해주세요."}>
-                    {todos && todos.map((aTodo: Todo) => (
-                        TodoRow(aTodo)
+                    {todos && todos.map((aTodo: Todo,index: number) => (
+                        TodoRow(aTodo,index+1)
                     ))}
                 </TableBody>
             </Table>

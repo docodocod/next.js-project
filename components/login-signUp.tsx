@@ -1,22 +1,59 @@
 "use client";
 
-import {useState} from "react";
-import {signIn} from "next-auth/react";
+import { useState } from "react";
+import { signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { toast, Toaster } from "react-hot-toast";
 
-const LoginSignUp=()=>{
 
-  const [emailInput,setEmailInput]=useState("");
-  const [passwordInput,setPasswordInput]=useState("");
+const LoginSignUp = () => {
 
-  const loginSubmit=async ()=>{
+  const [emailInput, setEmailInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
+  const [nickInput, setNickInput] = useState("");
+
+  const router = useRouter();
+  //로그인 버튼
+  const loginSubmit = async () => {
     const result = await signIn("credentials", {
       username: emailInput,
       password: passwordInput,
       redirect: true,
-      callbackUrl: `${process.env.NEXTAUTH_URL}/todos`,
+      callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/todos`
     });
-  }
-  return(
+  };
+
+  //회원가입 버튼
+  const signUpSubmit = async () => {
+    if(emailInput === "" || passwordInput === "" || nickInput === ""){
+      toast.error("다시 한번 확인해주세요.", {
+        position: "bottom-center"
+      });
+      return;
+    }
+    const newUser = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user`, {
+      method: "POST",
+      body: JSON.stringify({
+        nick: nickInput,
+        email: emailInput,
+        password: passwordInput
+      }),
+      cache: "no-store"
+    });
+    if (newUser) {
+      toast.success("회원가입에 성공하였습니다.", {
+        position: "bottom-center"
+      });
+    }else{
+      toast.error("회원가입에 실패하였습니다.", {
+        position: "bottom-center"
+      });
+    }
+    setNickInput("");
+    setEmailInput("");
+    setPasswordInput("");
+  };
+  return (
     <>
       <div className="section">
         <div className="container">
@@ -38,19 +75,19 @@ const LoginSignUp=()=>{
                                    onInput={(event) => {
                                      setEmailInput(event.target.value);
                                      console.log(emailInput);
-                                   }}/>
+                                   }} />
                             <i className="input-icon uil uil-at"></i>
                           </div>
                           <div className="form-group mt-2">
                             <input type="password" name="logpass" className="form-style" placeholder="비밀번호를 입력해주세요."
                                    id="logpass" autoComplete="off" value={passwordInput}
-                                   onInput={(event)=>{
+                                   onInput={(event) => {
                                      setPasswordInput(event.target.value);
                                      console.log(passwordInput);
-                                   }}/>
+                                   }} />
                             <i className="input-icon uil uil-lock-alt"></i>
                           </div>
-                          <button className="btn mt-4" onClick={()=>loginSubmit(emailInput,passwordInput)}>로그인</button>
+                          <button className="btn mt-4" onClick={() => loginSubmit()}>로그인</button>
                           <p className="mb-0 mt-4 text-center"><a href="#0" className="link">비밀번호 찾기</a>
                           </p>
                         </div>
@@ -62,20 +99,32 @@ const LoginSignUp=()=>{
                           {/*<h4 className="mb-4 pb-3">회원가입</h4>*/}
                           <div className="form-group">
                             <input type="text" name="logname" className="form-style" placeholder="닉네임을 입력해주세요."
-                                   id="logname" autoComplete="off" />
+                                   id="logname" autoComplete="off" value={nickInput}
+                                   onInput={(event) => {
+                                     setNickInput(event.target.value);
+                                   }}
+                            />
                             <i className="input-icon uil uil-user"></i>
                           </div>
                           <div className="form-group mt-2">
                             <input type="email" name="logemail" className="form-style" placeholder="이메일을 입력해주세요."
-                                   id="logemail" autoComplete="off" />
+                                   id="logemail" autoComplete="off" value={emailInput}
+                                   onInput={(event) => {
+                                     setEmailInput(event.target.value);
+                                   }}
+                            />
                             <i className="input-icon uil uil-at"></i>
                           </div>
                           <div className="form-group mt-2">
                             <input type="password" name="logpass" className="form-style" placeholder="비밀번호를 입력해주세요."
-                                   id="logpass" autoComplete="off" />
+                                   id="logpass" autoComplete="off" value={passwordInput}
+                                   onInput={(event) => {
+                                     setPasswordInput(event.target.value);
+                                   }}
+                            />
                             <i className="input-icon uil uil-lock-alt"></i>
                           </div>
-                          <a href="#" className="btn mt-4">회원 등록</a>
+                          <button className="btn mt-4" onClick={() => signUpSubmit()}>회원 등록</button>
                         </div>
                       </div>
                     </div>
@@ -86,8 +135,12 @@ const LoginSignUp=()=>{
           </div>
         </div>
       </div>
+      <div><Toaster
+        position="bottom-center"
+        reverseOrder={false}
+      /></div>
     </>
-  )
-}
+  );
+};
 
 export default LoginSignUp;

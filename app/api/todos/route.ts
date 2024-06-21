@@ -1,5 +1,5 @@
 import {NextRequest, NextResponse} from "next/server";
-import {getAllTodos, addTodo, deleteTodo, getTodo} from "@/data/firestore";
+import {getAllTodos, addTodo, deleteTodo, getTodo} from "@/data/todoData";
 
 
 //모든 할일 조회
