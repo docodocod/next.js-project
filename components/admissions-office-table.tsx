@@ -16,13 +16,13 @@ export default function AdmissionTable({admissionList}:{admissionList:Admission[
               shadow="sm"
               radius="lg"
               width="100%"
-              alt={admission.title}
-              className="w-full object-cover h-[140px]"
+              height="100"
+              className="w-full object-cover h-[180px]"
               src={admission.img}
             /></a>
           </CardBody>
           <CardFooter className="text-small text-center">
-            <b className="text-center">{admission.title}</b>
+            <b style={{textAlign : "center"}}>{admission.title}</b>
           </CardFooter>
         </Card>
       ))}
