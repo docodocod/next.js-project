@@ -34,7 +34,7 @@ export default function PassingTable({ passingList }: {passingList:Essay[]}) {
     return passingList.slice(startIndex, endIndex);
   }, [page, rowsPerPage, passingList]);
 
-  const PassingRow = (aPassing: Passing, index: number) => {
+  const PassingRow = (aPassing: Essay, index: number) => {
     const [isSelected,setSelected]=useState("");
 
     return (
