@@ -31,8 +31,6 @@ export type FocusedTodoType={
   modalType: CustomModalType
 }
 
-
-
 export type User={
   nick?:string,
   email:string,

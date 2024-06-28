@@ -12,10 +12,10 @@ import {
   Spinner,
   Button,
 } from "@nextui-org/react";
-import { Passing } from "@/types";
+import { Essay } from "@/types";
 import {HeartIcon} from '@/components/HeartIcon';
 
-export default function PassingTable({ passingList }: {passingList:Passing[]}) {
+export default function PassingTable({ passingList }: {passingList:Essay[]}) {
   const [page, setPage] = React.useState(1);
   const rowsPerPage = 10;
 
@@ -82,7 +82,7 @@ export default function PassingTable({ passingList }: {passingList:Passing[]}) {
         loadingContent={<Spinner />}
         loadingState={loadingState}
       >
-        {currentPageData.map((aPassing: Passing, index: number) => (
+        {currentPageData.map((aPassing: Essay, index: number) => (
           PassingRow(aPassing, (page - 1) * rowsPerPage + index + 1)
         ))}
       </TableBody>
