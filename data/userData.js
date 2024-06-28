@@ -26,12 +26,13 @@ export async function getUser(User){
     if (User===null){
       return null;
     }
+    console.log(User.email);
     const UserRef=doc(db,"user",User.email);
     const userDocSnap=await getDoc(UserRef)
     if(userDocSnap && (await bcrypt.compare(User.password,userDocSnap.data()['password']))){
       console.log('Document data:', userDocSnap.data());
       const getUser={
-        nick:userDocSnap.data()['nick'],
+        nick: userDocSnap.data()['nick'],
         email: userDocSnap.data()['email']
       }
       return getUser;

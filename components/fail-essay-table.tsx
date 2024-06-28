@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo,useState } from "react";
+import React, { useMemo } from "react";
 import {
   Table,
   TableHeader,
@@ -10,48 +10,38 @@ import {
   TableCell,
   Pagination,
   Spinner,
-  Button,
 } from "@nextui-org/react";
-import { Passing } from "@/types";
-import {HeartIcon} from '@/components/HeartIcon';
+import { Essay } from "@/types";
 
-export default function PassingTable({ passingList }: {passingList:Passing[]}) {
+export default function FailTable({ failList }: {failList:Essay[]}) {
   const [page, setPage] = React.useState(1);
   const rowsPerPage = 10;
 
   // Calculate the total number of pages
   const pages = useMemo(() => {
-    return passingList.length ? Math.ceil(passingList.length / rowsPerPage) : 0;
-  }, [passingList.length, rowsPerPage]);
+    return failList.length ? Math.ceil(failList.length / rowsPerPage) : 0;
+  }, [failList.length, rowsPerPage]);
 
   // Determine the current loading state
-  const loadingState = passingList.length === 0 ? "loading" : "idle";
+  const loadingState = failList.length === 0 ? "loading" : "idle";
 
   // Function to get data for the current page
   const currentPageData = useMemo(() => {
     const startIndex = (page - 1) * rowsPerPage;
     const endIndex = startIndex + rowsPerPage;
-    return passingList.slice(startIndex, endIndex);
-  }, [page, rowsPerPage, passingList]);
+    return failList.slice(startIndex, endIndex);
+  }, [page, rowsPerPage, failList]);
 
-  const PassingRow = (aPassing: Passing, index: number) => {
-    const [isSelected,setSelected]=useState("");
-
+  const FailRow = (aFail: Essay, index: number) => {
     return (
-      <TableRow key={aPassing.id}>
+      <TableRow key={index}>
         <TableCell>{index}</TableCell>
-        <TableCell><a href={aPassing.essay_href} target="_blank">{aPassing.essay_title}</a></TableCell>
-        <TableCell>{aPassing.essay_date}</TableCell>
-        <TableCell>
-          <div className="flex gap-4 items-center">
-            <Button isIconOnly color="default" variant="light" aria-label="Like" >
-              <HeartIcon />
-            </Button>
-          </div>
-        </TableCell>
+        <TableCell><a href={aFail.essay_href} target="_blank">{aFail.essay_title}</a></TableCell>
+        <TableCell>{aFail.essay_date}</TableCell>
       </TableRow>
     );
   };
+
   return (
     <Table
       aria-label="Example table with client async pagination"
@@ -75,15 +65,14 @@ export default function PassingTable({ passingList }: {passingList:Passing[]}) {
         <TableColumn key="number" className="text-center">번호</TableColumn>
         <TableColumn key="title" className="text-center">수기 제목</TableColumn>
         <TableColumn key="date" className="text-center">작성 날짜</TableColumn>
-        <TableColumn key="like" className="text-center">즐겨찾기</TableColumn>
       </TableHeader>
       <TableBody
         items={currentPageData}
         loadingContent={<Spinner />}
         loadingState={loadingState}
       >
-        {currentPageData.map((aPassing: Passing, index: number) => (
-          PassingRow(aPassing, (page - 1) * rowsPerPage + index + 1)
+        {currentPageData.map((aFail: Essay, index: number) => (
+          FailRow(aFail, (page - 1) * rowsPerPage + index + 1)
         ))}
       </TableBody>
     </Table>

@@ -5,20 +5,20 @@ export const siteConfig = {
   description: "Make beautiful websites regardless of your design experience.",
   navItems: [
     {
-      label: "Todos",
+      label: "나의 할일",
       href: "/todos",
     },
     {
-      label: "Docs",
-      href: "/docs",
+      label: "편입 합격 수기",
+      href: "/passing-essay",
     },
     {
-      label: "Pricing",
-      href: "/pricing",
+      label: "편입 불합격 수기",
+      href: "/fail-essay",
     },
     {
-      label: "Blog",
-      href: "/blog",
+      label: "대학교 입학처",
+      href: "/admissions-office",
     },
     {
       label: "About",
@@ -32,19 +32,19 @@ export const siteConfig = {
     },
     {
       label: "나의 할 일",
-      href: "/dashboard",
+      href: "/todos",
     },
     {
       label: "편입 합격 수기",
-      href: "/projects",
+      href: "/passing-essay",
     },
     {
       label: "편입 불합격 수기",
-      href: "/team",
+      href: "/fail-essay",
     },
     {
-      label: "Calendar",
-      href: "/calendar",
+      label: "대학교 입학처",
+      href: "/admissions-office",
     },
     {
       label: "Settings",

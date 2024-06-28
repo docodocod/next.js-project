@@ -17,7 +17,7 @@ export default function AdmissionTable({admissionList}:{admissionList:Admission[
               radius="lg"
               width="100%"
               height="100"
-              className="w-full object-cover h-[180px]"
+              className="object-cover h-[180px] w-full"
               src={admission.img}
             /></a>
           </CardBody>

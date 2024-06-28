@@ -11,12 +11,27 @@ export type Todo={
   created_at: Date;
 }
 
+export type Essay={
+  essay_id:string,
+  essay_href: string,
+  essay_title: string,
+  essay_date: string,
+}
+
+export type Admission={
+  title:string,
+  img:string,
+  href:string,
+}
+
 export type CustomModalType= 'detail' | 'edit' | 'delete'
 
 export type FocusedTodoType={
   focusedTodo:Todo | null,
   modalType: CustomModalType
 }
+
+
 
 export type User={
   nick?:string,
