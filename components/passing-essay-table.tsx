@@ -38,7 +38,7 @@ export default function PassingTable({ passingList }: {passingList:Essay[]}) {
     const [isSelected,setSelected]=useState("");
 
     return (
-      <TableRow key={aPassing.id}>
+      <TableRow key={aPassing.essay_id}>
         <TableCell>{index}</TableCell>
         <TableCell><a href={aPassing.essay_href} target="_blank">{aPassing.essay_title}</a></TableCell>
         <TableCell>{aPassing.essay_date}</TableCell>
