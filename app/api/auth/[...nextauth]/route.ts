@@ -2,6 +2,7 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 const handler = NextAuth({
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -41,7 +42,7 @@ const handler = NextAuth({
       return { ...token, ...user };
     },
 
-    async session({ session, token }) {
+    async session({ session, token,user }) {
       session.user = token as any;
       return session;
     },

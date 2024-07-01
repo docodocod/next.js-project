@@ -13,6 +13,7 @@ import {ToastContainer, toast} from 'react-toastify';
 import {VerticalDotsIcon} from './icons';
 import 'react-toastify/dist/ReactToastify.css';
 import CustomModal from "@/components/custom-modal";
+import {useSession} from "next-auth/react";
 
 //할일 테이블
 const TodosTable = ({todos}: { todos: Todo[] }) => {
@@ -142,7 +143,7 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         })
         router.refresh();
         setNewTodoInput('');
-        notifySuccessEvent("할일이 추가되었습니다.");
+        notifySuccessEvent("추가되었습니다.");
         setIsLoading(false);
         setTodoAddEnable(false);
         console.log(`할일 추가완료: ${newTodoInput}`);
@@ -162,7 +163,7 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         })
         router.refresh();
         setNewTodoInput('');
-        notifySuccessEvent("할일이 수정되었습니다.");
+        notifySuccessEvent("수정되었습니다.");
         setIsLoading(false);
         setTodoAddEnable(false);
         console.log(`할일 수정완료: ${newTodoInput}`);
@@ -177,7 +178,7 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
             cache: 'no-store'
         })
         router.refresh();
-        notifySuccessEvent("할일이 삭제 되었습니다.");
+        notifySuccessEvent("삭제 되었습니다.");
         setIsLoading(false);
         console.log(`할일 삭제 완료: ${newTodoInput}`);
     }

@@ -10,6 +10,7 @@ export async function AddUser(User){
     nick:User.nick,
     email:User.email,
     password: hashedPassword,
+    school:User.school,
   }
   const list=await setDoc(newUserRef,newUserData);
   if(list===null){
@@ -17,7 +18,8 @@ export async function AddUser(User){
   }else {
     return {
       nick:User.nick,
-      email:User.email
+      email:User.email,
+      school:User.school
     }
   }
 }
@@ -26,14 +28,14 @@ export async function getUser(User){
     if (User===null){
       return null;
     }
-    console.log(User.email);
     const UserRef=doc(db,"user",User.email);
     const userDocSnap=await getDoc(UserRef)
     if(userDocSnap && (await bcrypt.compare(User.password,userDocSnap.data()['password']))){
       console.log('Document data:', userDocSnap.data());
       const getUser={
         nick: userDocSnap.data()['nick'],
-        email: userDocSnap.data()['email']
+        email: userDocSnap.data()['email'],
+        school: userDocSnap.data()['school'],
       }
       return getUser;
     }else{

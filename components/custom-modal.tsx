@@ -41,10 +41,10 @@ const CustomModal = ({focusedTodo, modalType, onClose,onEdit,onDelete}: {
             <>
                 <ModalHeader className="flex flex-col gap-1">상세보기</ModalHeader>
                 <ModalBody>
-                    <div className="flex py-2 space-x-4">
+{/*                    <div className="flex py-2 space-x-4">
                         <span className="font-bold">ID : </span>
                         <p>{focusedTodo.id}</p>
-                    </div>
+                    </div>*/}
                     <div className="flex py-2 space-x-4">
                         <span className="font-bold">할일 내용 : </span>
                         <p>{focusedTodo.title}</p>
@@ -55,15 +55,12 @@ const CustomModal = ({focusedTodo, modalType, onClose,onEdit,onDelete}: {
                     </div>
                     <div className="flex py-2 space-x-4">
                         <span className='font-bold'>작성일 : </span>
-                        <p>{`${convertUTCToKoreanTime(focusedTodo.created_at)}`}</p>
+                        <p>${convertUTCToKoreanTime(focusedTodo.created_at)}</p>
                     </div>
                 </ModalBody>
                 <ModalFooter>
                     <Button color="danger" variant="light" onPress={onClose}>
                         닫기
-                    </Button>
-                    <Button color="primary" onPress={onClose}>
-                        액션
                     </Button>
                 </ModalFooter>
             </>
@@ -96,7 +93,7 @@ const CustomModal = ({focusedTodo, modalType, onClose,onEdit,onDelete}: {
                                onValueChange={setIsDone}
                                 color="warning"
                         />
-                        {`${isDone ? '완료' : '미완료'}`}
+                        {`${isDone ? '완료' : '미완료' }`}
                     </div>
                     <div className="flex py-2 space-x-4">
                         <span className='font-bold'>작성일 : </span>
@@ -104,16 +101,16 @@ const CustomModal = ({focusedTodo, modalType, onClose,onEdit,onDelete}: {
                     </div>
                 </ModalBody>
                 <ModalFooter>
+                    <Button color="default" onPress={onClose}>
+                        닫기
+                    </Button>
                     <Button color="warning" variant="flat" onPress={()=>{
                         setIsLoading(true);
                         onEdit(focusedTodo.id,editedTodoInput,isDone)
                     }}>
                         {isLoading ?
-                            <CircularProgress color="warning" aria-label="Loading..." size='sm'/> :
-                            "수정"}
-                    </Button>
-                    <Button color="default" onPress={onClose}>
-                        닫기
+                          <CircularProgress color="warning" aria-label="Loading..." size='sm'/> :
+                          "수정"}
                     </Button>
                 </ModalFooter>
             </>
@@ -140,20 +137,20 @@ const CustomModal = ({focusedTodo, modalType, onClose,onEdit,onDelete}: {
                     </div>
                     <div className="flex py-2 space-x-4">
                         <span className='font-bold'>작성일 : </span>
-                        <p>{`${convertUTCToKoreanTime(focusedTodo.created_at)}`}</p>
+                        <p>${convertUTCToKoreanTime(focusedTodo.created_at)}</p>
                     </div>
                 </ModalBody>
                 <ModalFooter>
+                    <Button color="default" onPress={onClose}>
+                        닫기
+                    </Button>
                     <Button color="warning" variant="flat" onPress={()=>{
                         setIsLoading(true);
                         onDelete(focusedTodo.id)
                     }}>
                         {isLoading ?
-                            <CircularProgress color="danger" aria-label="Loading..." size='sm'/> :
-                            "삭제"}
-                    </Button>
-                    <Button color="default" onPress={onClose}>
-                        닫기
+                          <CircularProgress color="danger" aria-label="Loading..." size='sm'/> :
+                          "삭제"}
                     </Button>
                 </ModalFooter>
             </>

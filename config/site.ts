@@ -20,15 +20,11 @@ export const siteConfig = {
       label: "대학교 입학처",
       href: "/admissions-office",
     },
-    {
-      label: "About",
-      href: "/about",
-    },
   ],
   navMenuItems: [
     {
       label: "내 정보",
-      href: "/profile",
+      href: "/my-profile",
     },
     {
       label: "나의 할 일",

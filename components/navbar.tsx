@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Navbar as NextUINavbar,
   NavbarContent,
@@ -14,7 +16,6 @@ import { Input } from "@nextui-org/input";
 import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
-
 import { siteConfig } from "@/config/site";
 import { ThemeSwitch } from "@/components/theme-switch";
 import {
@@ -25,8 +26,11 @@ import {
   SearchIcon,
   Logo,
 } from "@/components/icons";
+import {useSession} from "next-auth/react";
 
 export const Navbar = () => {
+  const {data:session}=useSession();
+
   const searchInput = (
     <Input
       aria-label="Search"
@@ -78,7 +82,7 @@ export const Navbar = () => {
         className="hidden sm:flex basis-1/5 sm:basis-full"
         justify="end"
       >
-        <NavbarItem className="hidden sm:flex gap-2">
+        {/*<NavbarItem className="hidden sm:flex gap-2">
           <Link isExternal aria-label="Twitter" href={siteConfig.links.twitter}>
             <TwitterIcon className="text-default-500" />
           </Link>
@@ -89,7 +93,8 @@ export const Navbar = () => {
             <GithubIcon className="text-default-500" />
           </Link>
           <ThemeSwitch />
-        </NavbarItem>
+        </NavbarItem>*/}
+        {session?.user?.data && <NavbarItem className="hidden lg:flex">{session.user.data.nick}님 안녕하세요</NavbarItem>}
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden md:flex">
           <Button
@@ -106,9 +111,10 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
-        <Link isExternal aria-label="Github" href={siteConfig.links.github}>
+        {/*<Link isExternal aria-label="Github" href={siteConfig.links.github}>
           <GithubIcon className="text-default-500" />
-        </Link>
+        </Link>*/}
+        {session?.user?.data && <NavbarItem className="lg:flex">{session.user.data.nick}님 안녕하세요</NavbarItem>}
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>

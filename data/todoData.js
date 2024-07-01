@@ -15,7 +15,7 @@ import db from "./index.js";
 const createdAtTimestamp=Timestamp.fromDate(new Date())
 
 export async function getAllTodos() {
-  const todoRef=collection(db, "transfer-todo");
+  const todoRef=collection(db, "transfer-todo",);
   const descQuery=query(todoRef,orderBy("created_at","desc"));
   const querySnapshot = await getDocs(descQuery);
   if (querySnapshot.empty){

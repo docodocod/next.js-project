@@ -34,5 +34,6 @@ export type FocusedTodoType={
 export type User={
   nick?:string,
   email:string,
-  password:string
+  password:string,
+  school:string,
 }

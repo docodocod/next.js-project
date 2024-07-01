@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function PricingLayout({
+export default function ProfileLayout({
   children,
 }: {
   children: React.ReactNode;
