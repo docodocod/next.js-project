@@ -42,13 +42,13 @@ export default function PassingTable({ passingList }: {passingList:Essay[]}) {
         <TableCell>{index}</TableCell>
         <TableCell><a href={aPassing.essay_href} target="_blank">{aPassing.essay_title}</a></TableCell>
         <TableCell>{aPassing.essay_date}</TableCell>
-        <TableCell>
+{/*        <TableCell>
           <div className="flex gap-4 items-center">
             <Button isIconOnly color="default" variant="light" aria-label="Like" >
               <HeartIcon />
             </Button>
           </div>
-        </TableCell>
+        </TableCell>*/}
       </TableRow>
     );
   };
@@ -75,7 +75,7 @@ export default function PassingTable({ passingList }: {passingList:Essay[]}) {
         <TableColumn key="number" className="text-center">번호</TableColumn>
         <TableColumn key="title" className="text-center">수기 제목</TableColumn>
         <TableColumn key="date" className="text-center">작성 날짜</TableColumn>
-        <TableColumn key="like" className="text-center">즐겨찾기</TableColumn>
+{/*        <TableColumn key="like" className="text-center">즐겨찾기</TableColumn>*/}
       </TableHeader>
       <TableBody
         items={currentPageData}

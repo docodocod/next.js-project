@@ -30,6 +30,8 @@ import {useSession} from "next-auth/react";
 
 export const Navbar = () => {
   const {data:session}=useSession();
+  console.log("session:"+session);
+  console.log(JSON.stringify(session));
 
   const searchInput = (
     <Input
@@ -94,7 +96,7 @@ export const Navbar = () => {
           </Link>
           <ThemeSwitch />
         </NavbarItem>*/}
-        {session?.user?.data && <NavbarItem className="hidden lg:flex">{session.user.data.nick}님 안녕하세요</NavbarItem>}
+        {session?.user && <NavbarItem className="hidden lg:flex">{session?.user?.data?.nick}님 안녕하세요</NavbarItem>}
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
         <NavbarItem className="hidden md:flex">
           <Button
@@ -114,7 +116,7 @@ export const Navbar = () => {
         {/*<Link isExternal aria-label="Github" href={siteConfig.links.github}>
           <GithubIcon className="text-default-500" />
         </Link>*/}
-        {session?.user?.data && <NavbarItem className="lg:flex">{session.user.data.nick}님 안녕하세요</NavbarItem>}
+        {session?.user && <NavbarItem className="lg:flex">{session?.user?.data?.nick}님 안녕하세요</NavbarItem>}
         <ThemeSwitch />
         <NavbarMenuToggle />
       </NavbarContent>

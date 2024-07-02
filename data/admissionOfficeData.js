@@ -1,4 +1,4 @@
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { collection,getDocs,orderBy,query,doc,getDoc} from "firebase/firestore";
 import db from "./index";
 
 export async function getAllAdmission() {
@@ -19,3 +19,14 @@ export async function getAllAdmission() {
   })
   return allAdmission;
 }
+
+export async function getSchoolImage(school) {
+  const schoolImageRef=doc(db, "admissions-office",school.title.slice(0,3));
+  const querySnapshot = await getDoc(schoolImageRef);
+
+  const schoolImageUrl={
+      img: querySnapshot.data()['img']
+    }
+  return schoolImageUrl;
+}
+
