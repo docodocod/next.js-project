@@ -27,9 +27,24 @@ import {
   Logo,
 } from "@/components/icons";
 import {useSession} from "next-auth/react";
+import { ISODateString } from "next-auth/src/core/types";
+
+export interface Session {
+  user?: {
+    name?: string | null
+    email?: string | null
+    image?: string | null
+    data?:{
+      nick:string|null
+      email:string|null
+      school:string|null
+    }
+  }
+  expires: ISODateString
+}
 
 export const Navbar = () => {
-  const {data:session}=useSession();
+  const {Session:session}=useSession() ;
   console.log("session:"+session);
   console.log(JSON.stringify(session));
 
