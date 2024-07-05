@@ -3,7 +3,7 @@ import TodosTable from "@/components/todos-table";
 import DailyAdviceTable from "@/components/daily-advice-table";
 import React from "react";
 import {getServerSession} from "next-auth";
-import {authOptions} from "@/app/api/auth/[...nextauth]/route";
+import {authOptions} from "@/util/authOptions";
 import {Session} from "@/types"
 
 async function getAllTodosApi(email: string | null | undefined){

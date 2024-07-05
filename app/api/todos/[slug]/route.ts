@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 import { editTodo, getTodo, deleteTodo, getAllTodos } from "@/data/todoData";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import {authOptions} from "@/util/authOptions";
 import {Session} from "@/types"
 
 //모든 할일 조회
