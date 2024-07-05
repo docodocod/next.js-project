@@ -1,16 +1,12 @@
-import { Link } from "@nextui-org/link";
-import { Snippet } from "@nextui-org/snippet";
-import { Code } from "@nextui-org/code";
-import { button as buttonStyles } from "@nextui-org/theme";
+import { title } from "@/components/primitives";
+import LoginComponent from "@/components/loginComponent";
 
-import { siteConfig } from "@/config/site";
-import { title, subtitle } from "@/components/primitives";
-import { GithubIcon } from "@/components/icons";
+export default async function Home(){
 
-export default function Home() {
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-
-    </section>
+    <div className="flex flex-col space-y-8">
+      <h1 className={title()}></h1>
+      <LoginComponent/>
+    </div>
   );
 }

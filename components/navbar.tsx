@@ -27,28 +27,14 @@ import {
   Logo,
 } from "@/components/icons";
 import {useSession} from "next-auth/react";
-import { ISODateString } from "next-auth/src/core/types";
+import {Session} from "@/types";
 
-export interface Session {
-  user?: {
-    name?: string | null
-    email?: string | null
-    image?: string | null
-    data?:{
-      nick:string|null
-      email:string|null
-      school:string|null
-    }
-  }
-  expires: ISODateString
-}
+
 
 export const Navbar = () => {
-  const {Session:session}=useSession() ;
-  console.log("session:"+session);
-  console.log(JSON.stringify(session));
+  const {data:session}=useSession() as {data:Session};
 
-  const searchInput = (
+  /*const searchInput = (
     <Input
       aria-label="Search"
       classNames={{
@@ -67,7 +53,7 @@ export const Navbar = () => {
       }
       type="search"
     />
-  );
+  );*/
 
   return (
     <NextUINavbar maxWidth="xl" position="sticky">
@@ -112,7 +98,7 @@ export const Navbar = () => {
           <ThemeSwitch />
         </NavbarItem>*/}
         {session?.user && <NavbarItem className="hidden lg:flex">{session?.user?.data?.nick}님 안녕하세요</NavbarItem>}
-        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+{/*        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>*/}
         <NavbarItem className="hidden md:flex">
           <Button
             isExternal
@@ -137,7 +123,7 @@ export const Navbar = () => {
       </NavbarContent>
 
       <NavbarMenu>
-        {searchInput}
+{/*        {searchInput}*/}
         <div className="mx-4 mt-2 flex flex-col gap-2">
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item}-${index}`}>

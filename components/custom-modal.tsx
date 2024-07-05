@@ -51,11 +51,11 @@ const CustomModal = ({focusedTodo, modalType, onClose,onEdit,onDelete}: {
                     </div>
                     <div className="flex py-2 space-x-4">
                         <span className='font-bold'>완료여부 : </span>
-                        {`${isDone ? '완료' : '미완료'}`}
+                        <p>{`${isDone ? ' 완료 ' : ' 미완료 '}`}</p>
                     </div>
                     <div className="flex py-2 space-x-4">
                         <span className='font-bold'>작성일 : </span>
-                        <p>${convertUTCToKoreanTime(focusedTodo.created_at)}</p>
+                        <p>{convertUTCToKoreanTime(focusedTodo.created_at)}</p>
                     </div>
                 </ModalBody>
                 <ModalFooter>
@@ -73,10 +73,10 @@ const CustomModal = ({focusedTodo, modalType, onClose,onEdit,onDelete}: {
             <>
                 <ModalHeader className="flex flex-col gap-1">할일 수정</ModalHeader>
                 <ModalBody>
-                    <div className="flex py-2 space-x-4">
+{/*                    <div className="flex py-2 space-x-4">
                         <span className="font-bold">ID : </span>
                         <p>{focusedTodo.id}</p>
-                    </div>
+                    </div>*/}
                     <Input
                         autoFocus
                         isRequired
@@ -124,20 +124,16 @@ const CustomModal = ({focusedTodo, modalType, onClose,onEdit,onDelete}: {
                 <ModalHeader className="flex flex-col gap-1">할일 삭제</ModalHeader>
                 <ModalBody>
                     <div className="flex py-2 space-x-4">
-                        <span className="font-bold">ID : </span>
-                        <p>{focusedTodo.id}</p>
-                    </div>
-                    <div className="flex py-2 space-x-4">
                         <span className="font-bold">할일 내용 : </span>
                         <p>{focusedTodo.title}</p>
                     </div>
                     <div className="flex py-2 space-x-4">
-                        <span className='font-bold'>완료여부 : </span>
-                        {`${isDone ? '완료' : '미완료'}`}
+                        <span className='font-bold'>완료 여부 : </span>
+                        <p>{`${isDone ? '완료' : '미완료'}`}</p>
                     </div>
                     <div className="flex py-2 space-x-4">
                         <span className='font-bold'>작성일 : </span>
-                        <p>${convertUTCToKoreanTime(focusedTodo.created_at)}</p>
+                        <p>{convertUTCToKoreanTime(focusedTodo.created_at)}</p>
                     </div>
                 </ModalBody>
                 <ModalFooter>

@@ -3,10 +3,11 @@
 import React from "react";
 import {Card, CardHeader, CardBody, Image} from "@nextui-org/react";
 import {useSession} from "next-auth/react";
+import {Session} from "@/types"
 
 
 export default function MyProfileTable() {
-  const {data:session}=useSession();
+  const {data:session}=useSession() as {data:Session}
   /*const title=session?.user?.data?.school;
   const getSchoolImage=async (school: string | null | undefined)=>{
     const res=await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/profile/school`, {

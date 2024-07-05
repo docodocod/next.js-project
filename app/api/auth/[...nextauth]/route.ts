@@ -1,7 +1,8 @@
-import NextAuth from "next-auth/next";
+import NextAuth from "next-auth";
+import { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
-const handler = NextAuth({
+const authOptions:AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
@@ -10,21 +11,21 @@ const handler = NextAuth({
         username: {
           label: "이메일",
           type: "text",
-          placeholder: "이메일 주소 입력 요망",
+          placeholder: "이메일 주소 입력 요망"
         },
-        password: { label: "비밀번호", type: "password" },
+        password: { label: "비밀번호", type: "password" }
       },
 
       async authorize(credentials) {
         const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/user/login`, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             email: credentials?.username,
-            password: credentials?.password,
-          }),
+            password: credentials?.password
+          })
         });
         const user = await res.json();
         console.log(user);
@@ -34,26 +35,27 @@ const handler = NextAuth({
         } else {
           return null;
         }
-      },
-    }),
+      }
+    })
   ],
   callbacks: {
     async jwt({ token, user }) {
       return { ...token, ...user };
     },
 
-    async session({ session, token,user }) {
+    async session({ session, token, user }) {
       session.user = token as any;
       return session;
-    },
+    }
   },
 
 // 여기가 추가된 부분
   pages: {
-    signIn: "/auth/signin",
-  },
+    signIn: "/"
+  }
 // 여기가 추가된 부분
+};
 
-});
+const handler = NextAuth(authOptions);
 
-export { handler as GET, handler as POST };
+export { handler as GET, handler as POST ,authOptions};

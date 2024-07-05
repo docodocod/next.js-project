@@ -1,4 +1,5 @@
 import { SVGProps } from "react";
+import { ISODateString } from "next-auth/src/core/types";
 
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
@@ -36,4 +37,18 @@ export type User={
   email:string,
   password:string,
   school:string,
+}
+
+export type Session={
+  user?: {
+    name?: string | null
+    email?: string | null
+    image?: string | null
+    data?:{
+      nick:string|null
+      email:string|null
+      school:string|null
+    }
+  }
+  expires: ISODateString
 }

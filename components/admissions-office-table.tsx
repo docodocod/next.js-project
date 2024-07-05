@@ -18,7 +18,7 @@ export default function AdmissionTable({admissionList}:{admissionList:Admission[
               width="100%"
               height="100"
               className="object-cover h-[180px] w-full"
-              src={`/images/${admission.title}`}
+              src={admission.img}
             /></a>
           </CardBody>
           <CardFooter className="text-small text-center">

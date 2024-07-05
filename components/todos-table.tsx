@@ -13,10 +13,10 @@ import {ToastContainer, toast} from 'react-toastify';
 import {VerticalDotsIcon} from './icons';
 import 'react-toastify/dist/ReactToastify.css';
 import CustomModal from "@/components/custom-modal";
-import {useSession} from "next-auth/react";
+import Calendar from "@/components/calendar";
 
 //할일 테이블
-const TodosTable = ({todos}: { todos: Todo[] }) => {
+const TodosTable = ({todos,userId}: { todos: Todo[] ,userId:string|null|undefined}) => {
     //버튼
     const [todoAddEnable, setTodoAddEnable] = useState(false);
     // 할 일 입력
@@ -129,7 +129,7 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
     }
 
     //할일 추가 method
-    const AddTodoHandler = async (title:string) => {
+    const AddTodoHandler = async (title:string,userId:string|null|undefined) => {
         if (!todoAddEnable){return}
         setTodoAddEnable(false);
         setIsLoading(true);
@@ -137,7 +137,8 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos`, {
             method: 'POST',
             body: JSON.stringify({
-                title: title
+                title: title,
+                userId: userId
             }),
             cache: 'no-store'
         })
@@ -157,7 +158,7 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
             method: 'POST',
             body: JSON.stringify({
                 title: editedTitle,
-                is_done:editedIsDone
+                is_done:editedIsDone,
             }),
             cache: 'no-store'
         })
@@ -204,27 +205,26 @@ const TodosTable = ({todos}: { todos: Todo[] }) => {
         <div className='flex flex-col space-y-2'>
             {ModalComponent()}
             <ToastContainer/>
-            <div className="flex flex-wrap w-128 md:flex-nowrap gap-4">
-                <Input className="flex-grow" type="text" label="오늘 할 일"
+            <div className="flex flex-wrap md:flex-nowrap gap-4 justify-center">
+                <Input className="flex-grow max-w-[320px]" type="text" label="오늘 할 일"
                        value={newTodoInput}
                        onValueChange={(changedInput: string) => {
                            setNewTodoInput(changedInput);
                            setTodoAddEnable(changedInput.length > 0);
                        }}/>
-                <div className="flex-grow">
                 {todoAddEnable ?
                         <Button color="warning" className="h-14"
                                 onPress={async () => {
-                                    await AddTodoHandler(newTodoInput)
+                                    await AddTodoHandler(newTodoInput,userId)
                                 }}>
                             추가
                         </Button> :
                         <DisAbleTodoButton/>
                 }
-                </div>
             </div>
             <div className="h-6">{isLoading && <Spinner size='sm' color="warning"/>}
             </div>
+            <div><Calendar/></div>
             <Table aria-label="Example static collection table">
                 <TableHeader>
                     <TableColumn className="text-center">번호</TableColumn>

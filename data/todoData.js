@@ -14,8 +14,9 @@ import db from "./index.js";
 
 const createdAtTimestamp=Timestamp.fromDate(new Date())
 
-export async function getAllTodos() {
-  const todoRef=collection(db, "transfer-todo",);
+export async function getAllTodos(userId) {
+  console.log("getAllTodos id:"+userId);
+  const todoRef=collection(db, "user",userId,"transfer-todos");
   const descQuery=query(todoRef,orderBy("created_at","desc"));
   const querySnapshot = await getDocs(descQuery);
   if (querySnapshot.empty){
@@ -35,8 +36,8 @@ export async function getAllTodos() {
 }
 
 //단일 할일 추가
-export async function addTodo({title}){
-  const newTodoRef=doc(collection(db,"transfer-todo"));
+export async function addTodo(title,userId){
+  const newTodoRef=doc(collection(db,"user",userId,"transfer-todos"));
   const newTodoData={
     id:newTodoRef.id,
     title:title,
@@ -57,11 +58,11 @@ export async function addTodo({title}){
 }
 
 //단일 할일 조회
-export async function getTodo(id){
+export async function getTodo(id,userId){
   if (id===null){
     return null;
   }
-  const TodoRef=doc(collection(db,"transfer-todo"),id);
+  const TodoRef=doc(db,"user",userId,"transfer-todos",id);
   const todoDocSnap=await getDoc(TodoRef)
 
   if(todoDocSnap.exists()){
@@ -81,15 +82,15 @@ export async function getTodo(id){
 }
 
 //단일 할일 수정
-export async function editTodo(id,{title,is_done}){
+export async function editTodo(id,userId,{title,is_done}){
 
-  const getTodoList=await getTodo(id);
+  const getTodoList=await getTodo(id,userId);
 
   if (getTodoList===null){
     return null;
   }
-  const TodoRef=doc(db,"transfer-todo",id);
-  const updatedTodo=await updateDoc(TodoRef,{
+  const TodoRef = doc(db,"user",userId,"transfer-todos",id);
+  await updateDoc(TodoRef,{
     title: title,
     is_done: is_done
   });
@@ -102,12 +103,13 @@ export async function editTodo(id,{title,is_done}){
 }
 
 //단일 할일 삭제
-export async function deleteTodo(id){
-  const getTodoList=await getTodo(id);
+export async function deleteTodo(id,userId){
+  const getTodoList=await getTodo(id,userId);
 
   if (getTodoList===null){
     return null;
   }
-  await deleteDoc(doc(db,"transfer-todo",id));
+  const deleteRef=doc(db,'user',userId,'transfer-todos',id);
+  await deleteDoc(deleteRef);
   return getTodoList;
 }
