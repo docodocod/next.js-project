@@ -10,6 +10,4 @@ export async function POST(request:NextRequest){
     data:User
   }
   return new NextResponse(JSON.stringify(response), { status: 201, headers: { 'Content-Type': 'application/json' } });
-
-
 }

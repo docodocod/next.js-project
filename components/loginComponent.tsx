@@ -24,7 +24,7 @@ const LoginComponent = () => {
       username: emailInput,
       password: passwordInput,
       redirect: true,
-      callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/todos`
+      callbackUrl: `${process.env.NEXT_PUBLIC_BASE_URL}/todos/${emailInput}`
     });
   };
 
