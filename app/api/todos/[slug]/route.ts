@@ -16,8 +16,11 @@ export async function GET(request:NextRequest,{params}:{params:{slug:string}} ) 
 
 //단일 할일 삭제
 export async function DELETE(request: NextRequest, {params}: {params:{ slug: string }} ) {
-    const session:Session | null=await getServerSession(authOptions);
-    const userId=session?.user?.data?.email;
+    const session:Session | null = await getServerSession(authOptions)
+    if (!session) {
+        console.log('세션이 없습니다.');
+    }
+    const userId:string | null | undefined = session?.user?.data?.email;
     const deleteTodoList=await deleteTodo(params.slug,userId);
 
     if (deleteTodoList===null){
@@ -32,8 +35,11 @@ export async function DELETE(request: NextRequest, {params}: {params:{ slug: str
 
 //단일 할일 수정
 export async function POST(request: NextRequest, {params}: {params:{ slug: string }} ) {
-    const session:Session|null=await getServerSession(authOptions);
-    const userId=session?.user?.data?.email;
+    const session:Session | null = await getServerSession(authOptions)
+    if (!session) {
+        console.log('세션이 없습니다.');
+    }
+    const userId:string | null | undefined = session?.user?.data?.email;
     console.log("update todo userId:"+userId);
     const {title,is_done}=await request.json();
     const editTodos=await editTodo(params.slug,userId,{title,is_done});
