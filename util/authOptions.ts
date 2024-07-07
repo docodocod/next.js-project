@@ -12,7 +12,7 @@ export const authOptions:AuthOptions = {
           type: "text",
           placeholder: "이메일 주소 입력 요망"
         },
-        password: { label: "비밀번호", type: "password" }
+        password: { label: "비밀번호", type: "password" },
       },
 
       async authorize(credentials) {
