@@ -154,9 +154,10 @@ const TodosTable = ({todos,userId}: { todos: Todo[] ,userId:string|null|undefine
     const EditTodoHandler = async (id:string,editedTitle:string,editedIsDone:boolean) => {
         setIsLoading(true);
         await new Promise(f => setTimeout(f, 600));
-        await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos/${id}`, {
+        await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/todos`, {
             method: 'POST',
             body: JSON.stringify({
+                id:id,
                 title: editedTitle,
                 is_done:editedIsDone,
             }),
