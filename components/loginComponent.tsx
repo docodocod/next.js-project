@@ -20,11 +20,12 @@ const LoginComponent = () => {
     console.log("loginSubmit 진입");
     console.log(emailInput);
     console.log(passwordInput);
+    console.log("url: "+process.env.NEXT_PUBLIC_BASE_URL);
     const result = await signIn("credentials", {
       username: emailInput,
       password: passwordInput,
       redirect: true,
-      callbackUrl:`${process.env.NEXT_PUBLIC_BASE_URL}/todos`,
+      callbackUrl:`${process.env.NEXT_PUBLIC_BASE_URL}/todos/`,
     });
   };
 
