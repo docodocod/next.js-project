@@ -25,7 +25,7 @@ const LoginComponent = () => {
       username: emailInput,
       password: passwordInput,
       redirect: true,
-      callbackUrl:`${process.env.NEXT_PUBLIC_BASE_URL}/todos/`,
+      callbackUrl:"https://www.naver.com",
     });
   };
 
