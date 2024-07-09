@@ -34,15 +34,15 @@ export async function DELETE(request: NextRequest, {params}: {params:{ slug: str
 }
 
 //단일 할일 수정
-export async function POST(request: NextRequest, {params}: {params:{ slug: string }} ) {
+export async function POST(request: NextRequest) {
     const session:Session | null = await getServerSession(authOptions)
     if (!session) {
         console.log('세션이 없습니다.');
     }
     const userId:string | null | undefined = session?.user?.data?.email;
     console.log("update todo userId:"+userId);
-    const {title,is_done}=await request.json();
-    const editTodos=await editTodo(params.slug,userId,{title,is_done});
+    const {id,title,is_done}=await request.json();
+    const editTodos=await editTodo(id,userId,{title,is_done});
     const response = {
         message: "해당 할일 수정 완료",
         data: editTodos
