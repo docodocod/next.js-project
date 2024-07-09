@@ -24,7 +24,7 @@ const LoginComponent = () => {
     const result = await signIn("credentials", {
       username: emailInput,
       password: passwordInput,
-      redirect: true,
+      redirect: false,
       callbackUrl:`${process.env.NEXT_PUBLIC_BASE_URL}/todos`,
     });
   };

@@ -38,9 +38,6 @@ export const authOptions:AuthOptions = {
     })
   ],
   callbacks: {
-    async redirect({url,baseUrl}) {
-      return Promise.resolve(url)
-    },
 
     async jwt({ token, user }) {
       return { ...token, ...user };
